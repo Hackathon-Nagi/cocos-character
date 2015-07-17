@@ -115,11 +115,13 @@ bool HelloWorld::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
         if (direction) {
             // Move down
             printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
+            sprite->setRotation(0.0f);
             sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, sprite->getContentSize().height/2)) );
             direction = false;
         } else {
             // Move up
             printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
+            sprite->setRotation(180.0f);
             sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, visibleSize.height - sprite->getContentSize().height/2)) );
             direction = true;
         }
