@@ -108,16 +108,21 @@ bool HelloWorld::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
     Size visibleSize = Director::getInstance()->getVisibleSize();
     auto sprite = this->getChildByTag(1);
 
-    if (direction) {
-        // Move down
-        printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
-        sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, sprite->getContentSize().height/2)) );
-        direction = false;
-    } else {
-        // Move up
-        printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
-        sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, visibleSize.height - sprite->getContentSize().height/2)) );
-        direction = true;
+    auto actionManager = Director::getInstance()->getActionManager();
+    bool is_lock = actionManager->getNumberOfRunningActionsInTarget(sprite) ? true : false;
+
+    if (!is_lock) {
+        if (direction) {
+            // Move down
+            printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
+            sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, sprite->getContentSize().height/2)) );
+            direction = false;
+        } else {
+            // Move up
+            printf("%f\t%f\n", visibleSize.width/5, visibleSize.height);
+            sprite->runAction( MoveTo::create(2.0f, Point(visibleSize.width/5, visibleSize.height - sprite->getContentSize().height/2)) );
+            direction = true;
+        }
     }
 
     return true;
